@@ -1,0 +1,29 @@
+{
+  "name": "cuadritos",
+  "version": "1.0.0",
+  "description": "This game gave me ours of happiness in middleschool, I only hope to do it justice.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server",
+    "build": "webpack" 
+  },
+  "keywords": [
+    "game",
+    "svg"
+  ],
+  "author": "Pablo Barría Urenda",
+  "license": "MIT",
+  "devDependencies": {
+    "html-webpack-plugin": "^3.2.0",
+    "postcss": "^6.0.22",
+    "postcss-cssnext": "^3.1.0",
+    "webpack": "^4.8.2",
+    "webpack-cli": "^2.1.3",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0"
+  }
+}
