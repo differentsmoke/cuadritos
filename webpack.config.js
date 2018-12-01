@@ -16,6 +16,15 @@ const base = {
         path: __dirname + "/dist/",
         filename: "app.min.js"
     },
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: ["style-loader", "css-loader"]
+            }
+        ]
+    },
     devServer: {
         contentBase: "./dist"
     },
