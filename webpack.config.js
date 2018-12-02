@@ -1,4 +1,3 @@
-const Webpack = require("webpack");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 const lifecyle = process.env.npm_lifecyle_event;
@@ -25,6 +24,7 @@ const base = {
             }
         ]
     },
+    devtool: "source-map",
     devServer: {
         contentBase: "./dist"
     },

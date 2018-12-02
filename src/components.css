@@ -1,0 +1,30 @@
+rect.P1 {
+    fill: red;
+}
+
+rect.P2 {
+    fill: green;
+}
+
+rect {
+    fill: hsl(200, 50%, 80%);
+}
+
+line.set-edge {
+    stroke-width: 2px;
+    stroke: black;
+}
+
+g.edge {
+    stroke-width: 2px;
+    cursor: pointer;
+}
+
+g.edge:hover {
+    stroke: yellow;
+}
+
+g.edge line.active {
+    stroke: transparent;
+    stroke-width: 15px;
+}
