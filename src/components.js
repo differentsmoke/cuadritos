@@ -2,34 +2,66 @@ import "./components.css";
 
 const xmlns = "http://www.w3.org/2000/svg";
 
-export function createComponents(scale, callback) {
+export function createComponents(root, scale, callback) {
+    const tiles = document.createElementNS(xmlns, "g");
+    const edges = document.createElementNS(xmlns, "g");
+    const vertices = document.createElementNS(xmlns, "g");
+
+    root.appendChild(tiles);
+    root.appendChild(edges);
+    root.appendChild(vertices);
+
     function createTile(face) {
+        if (face.element) {
+            tiles.removeChild(face.element);
+        }
+
         const { claimedBy } = face;
 
+        const group = document.createElementNS(xmlns, "g");
+
         const tile = document.createElementNS(xmlns, "rect");
-        const tileAttributes = Object.assign(Object.create(null), {
+        const tileAttributes = {
             x: face.x * scale,
             y: face.y * scale,
             width: face.width * scale,
             height: face.height * scale,
             class: claimedBy
-        });
+        };
+
+        const text = document.createElementNS(xmlns, "text");
+        const textAttributes = {
+            x: face.x * scale + (face.width * scale) / 2,
+            y: face.y * scale + (face.height * scale) / 2
+        };
+        text.textContent = "" + face.index;
 
         Object.keys(tileAttributes).forEach(key =>
             tile.setAttribute(key, tileAttributes[key])
         );
-        return tile;
+        Object.keys(textAttributes).forEach(key =>
+            text.setAttribute(key, textAttributes[key])
+        );
+
+        group.appendChild(tile);
+        group.appendChild(text);
+
+        tiles.appendChild(group);
+
+        return group;
     }
 
     function createEdge(edge) {
-        const { A, B, set } = edge;
-        if (set) {
+        const { A, B, state } = edge;
+        if (state === "set") {
+            edges.removeChild(edge.element);
             const line = document.createElementNS(xmlns, "line");
             line.setAttribute("x1", A.x * scale);
             line.setAttribute("y1", A.y * scale);
             line.setAttribute("x2", B.x * scale);
             line.setAttribute("y2", B.y * scale);
             line.classList.add("set-edge");
+            edges.appendChild(line);
             return line;
         } else {
             const group = document.createElementNS(xmlns, "g");
@@ -49,13 +81,32 @@ export function createComponents(scale, callback) {
             group.appendChild(line);
             group.appendChild(active);
             group.onclick = function() {
-                edge.set = true;
-                edge.update = true;
+                edge.state = "clicked";
                 callback();
             };
+
+            edges.appendChild(group);
+
             return group;
         }
     }
 
-    return { createTile, createEdge };
+    function createDot(point) {
+        const { x, y } = point;
+        const circle = document.createElementNS(xmlns, "circle");
+        const svgCircleAttributes = [
+            ["cx", x * scale],
+            ["cy", y * scale],
+            ["r", 4],
+            ["class", "dot"]
+        ];
+        svgCircleAttributes.forEach(function(attribute) {
+            const [key, value] = attribute;
+            circle.setAttribute(key, value);
+        });
+        vertices.appendChild(circle);
+        return circle;
+    }
+
+    return { createTile, createEdge, createDot };
 }

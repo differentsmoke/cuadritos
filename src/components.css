@@ -1,27 +1,34 @@
+circle.dot {
+    fill: #060657;
+}
+
 rect.P1 {
-    fill: red;
+    fill: hsl(0, 70%, 95%);
 }
 
 rect.P2 {
-    fill: green;
+    fill: hsl(150, 70%, 95%);
 }
 
 rect {
-    fill: hsl(200, 50%, 80%);
+    fill: transparent;
 }
 
 line.set-edge {
     stroke-width: 2px;
-    stroke: black;
+    stroke: #060657;
 }
 
 g.edge {
-    stroke-width: 2px;
+    stroke-width: 1px;
+    stroke: hsl(200, 50%, 80%);
+    stroke: transparent;
     cursor: pointer;
 }
 
 g.edge:hover {
-    stroke: yellow;
+    stroke: red;
+    stroke-width: 3px;
 }
 
 g.edge line.active {
